@@ -13,7 +13,7 @@ To write a program to implement the the Logistic Regression Model to Predict the
 2. Print the placement data and salary data.
 3. Find the null and duplicate values.
 4. Using logistic regression find the predicted values of accuracy , confusion matrices.
-
+ 
 ## Program:
 ### Developed by: HAREVASU S
 ### RegisterNumber: 212223230069
