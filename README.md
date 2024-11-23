@@ -8,48 +8,83 @@ To write a program to implement the the Logistic Regression Model to Predict the
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
+1.Import the required libraries.
 
-1. Import the required packages and print the present data.
-2. Print the placement data and salary data.
-3. Find the null and duplicate values.
-4. Using logistic regression find the predicted values of accuracy , confusion matrices.
- 
+2.Load the dataset and check for null data values and duplicate data values in the dataframe.
+
+3.Import label encoder from sklearn.preprocessing to encode the dataset.
+
+4.Apply Logistic Regression on to the model.
+
+5.Predict the y values.
+
+6.Calculate the Accuracy,Confusion and Classsification report.
+
+
 ## Program:
-### Developed by: HAREVASU S
-### RegisterNumber: 212223230069
-
-### Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
+```
+Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
+Developed by: HAREVASU S
+RegisterNumber:  212223230069
+```
 ```
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+df=pd.read_csv("Placement_Data.csv")
+df
+df.head()
+df.tail()
+df=df.drop(['sl_no','gender','salary'],axis=1)
+df=df.drop(['ssc_b','hsc_b'],axis=1)
+df.shape
+df.info()
+df["degree_t"]=df["degree_t"].astype("category")
+df["hsc_s"]=df["hsc_s"].astype("category")
+df["workex"]=df["workex"].astype("category")
+df["status"]=df["status"].astype("category")
+df["specialisation"]=df["specialisation"].astype("category")
+df["degree_t"]=df["degree_t"].cat.codes
+df["hsc_s"]=df["hsc_s"].cat.codes
+df["workex"]=df["workex"].cat.codes
+df["status"]=df["status"].cat.codes
+df["specialisation"]=df["specialisation"].cat.codes
+x=df.iloc[: ,:-1].values
+y=df.iloc[:,- 1].values
+y
 from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
+
+df.head()
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
-df = pd.read_csv('Placement_Data.csv')
+#printing its accuracy
+clf=LogisticRegression()
+clf.fit(x_train,y_train)
+clf.score(x_test,y_test)
+from sklearn.linear_model import LogisticRegression
+lr = LogisticRegression(solver = "liblinear") 
+lr.fit(x_train,y_train)
+y_pred = lr.predict(x_test)
+y_pred
 
-X = df[['ssc_p', 'hsc_p', 'degree_p']]  # Use actual column names from your dataset
-y = df['status']  # Target column -  assuming 'status' is the target variable. Please verify with your dataset
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(y_test,y_pred)
+accuracy
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+from sklearn.metrics import confusion_matrix
+confusion = (y_test,y_pred)
+confusion 
 
-model = LogisticRegression()
-model.fit(X_train, y_train)
-
-y_pred = model.predict(X_test)
-
-accuracy = accuracy_score(y_test, y_pred)
-conf_matrix = confusion_matrix(y_test, y_pred)
-class_report = classification_report(y_test, y_pred)
-
-print(f"Accuracy: {accuracy:.2f}")
-print("Confusion Matrix:\n", conf_matrix)
-print("Classification Report:\n", class_report)
+from sklearn.metrics import classification_report
+classification_report1 = classification_report(y_test,y_pred)
+print(classification_report1)
+# Predicting for random value
+clf.predict([[1	,78.33,	1,	2,	77.48,	2,	86.5,	0,	66.28]])
 ```
 
 ## Output:
 ![Screenshot 2024-09-21 091813](https://github.com/user-attachments/assets/d0a8f39b-8324-4c4b-b6e2-0bc8f528d6ae)
-
-
 
 ## Result:
 Thus the program to implement the the Logistic Regression Model to Predict the Placement Status of Student is written and verified using python programming.
